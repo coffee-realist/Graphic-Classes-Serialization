@@ -1,5 +1,7 @@
 package lab3.graphics;
 
+import java.io.Writer;
+
 public class Rectangle extends Figure implements RoundAboutAvailable {
     private final Dot dot1;
     private final Dot dot2;
@@ -40,6 +42,11 @@ public class Rectangle extends Figure implements RoundAboutAvailable {
     public Rectangle move(double delta_x, double delta_y) {
         return new Rectangle(dot1.move(delta_x, delta_y), dot2.move(delta_x, delta_y),
                 dot3.move(delta_x, delta_y), dot4.move(delta_x, delta_y));
+    }
+
+    @Override
+    public void to_binary(Writer writer) {
+
     }
 
     public Ellipse getRoundAbout() {
