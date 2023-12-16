@@ -1,14 +1,44 @@
 package lab3.graphics;
 
+import java.util.List;
+import java.util.Map;
+
+import static lab3.graphics.Dot.createDot;
+
 public class Triangle extends Figure implements RoundAboutAvailable {
     private final Dot dot1;
     private final Dot dot2;
     private final Dot dot3;
+    static {
+        json_shape_map.put("Triangle", (Map<String, Object> map)->{
+            Dot[] dots = new Dot[4];
+            int i = 0;
+            for(Map<String, Object> dot: ((List<Map<String, Object>>) map.get("dots"))){
+                dots[i] = createDot(dot);
+                i++;
+            }
+            return new Triangle(dots[0], dots[1], dots[2]);
+        });
+        bin_shape_map.put("3", (List<Object> list)->{
+            Dot[] dots = new Dot[3];
+            int d_count = ((Double) list.get(0)).intValue();
+            for (int i = 0; i < d_count; i++){
+                double x = (double) list.get(1 + i);
+                double y = (double) list.get(2 + i);
+                dots[i] = new Dot(x, y);
+            }
+
+            return new Triangle(dots[0], dots[1], dots[2]);
+        });
+    }
+
+
 
     public Triangle(Dot dot1, Dot dot2, Dot dot3) {
         super(() -> (Math.abs((dot2.getX() - dot1.getX()) * (dot3.getY() - dot1.getY()) -
                 (dot3.getX() - dot1.getX()) * (dot2.getY() - dot1.getY()))) * 0.5);
         Dot[] dots = {dot1, dot2, dot3};
+        info.put("ID", 3);
         info.put("dots", dots);
         check(dot1, dot2, dot3);
         this.dot1 = dot1;

@@ -1,7 +1,9 @@
 package lab3.graphics;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,6 +44,10 @@ public class Geogroup extends Drawable {
     public void add(Geogroup geogroup) {
         list.addAll(geogroup.getList());
     }
+    public void addAll(ArrayList<Drawable> shapes) {
+        list.addAll(shapes);
+    }
+
 
     public void remove(Drawable drawable) {
         list.remove(drawable);
@@ -98,6 +104,14 @@ public class Geogroup extends Drawable {
         return hash;
 
     }
+    public void toBinary(FileOutputStream fos) throws IOException {
+        fos.write(ByteBuffer.allocate(8).putDouble(1).array());
+        fos.write(ByteBuffer.allocate(8).putDouble(4).array());
+        fos.write(ByteBuffer.allocate(8).putDouble(list.size()).array());
+        for (Drawable s: list)
+            s.toBinary(fos);
+    }
+
     public void toJSON(Writer writer) throws IOException {
         writer.write("{\n\"name\":\"Group\",");
         writer.write("\n\"shapes\":\n[\n");

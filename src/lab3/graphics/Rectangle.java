@@ -1,6 +1,10 @@
 package lab3.graphics;
 
 import java.io.Writer;
+import java.util.List;
+import java.util.Map;
+
+import static lab3.graphics.Dot.createDot;
 
 public class Rectangle extends Figure implements RoundAboutAvailable {
     private final Dot dot1;
@@ -10,14 +14,36 @@ public class Rectangle extends Figure implements RoundAboutAvailable {
     private final double rotation;
     private final double diagonal;
     private final Dot center;
+    static {
+        json_shape_map.put("Rectangle", (Map<String, Object> map)->{
+            Dot[] dots = new Dot[5];
+            int i = 0;
+            for (Map<String, Object> dot: ((List<Map<String, Object>>) map.get("dots"))){
+                dots[i] = createDot(dot);
+                i++;
+            }
+            return new Rectangle(dots[0], dots[1], dots[2], dots[3]);
+        });
+        bin_shape_map.put("1", (List<Object> list)->{
+            Dot[] dots = new Dot[4];
+            int d_count = ((Double) list.get(0)).intValue();
+            for (int i = 0; i < d_count; i++){
+                double x = (double) list.get(1 + i);
+                double y = (double) list.get(2 + i);
+                dots[i] = new Dot(x, y);
+            }
+            return new Rectangle(dots[0], dots[1], dots[2], dots[3]);
+        });
+
+    }
 
     public Rectangle(Dot dot1, Dot dot2, Dot dot3, Dot dot4) {
         super(() -> dot2.length(dot1) * dot4.length(dot1));
         Dot[] dots = {dot1, dot2, dot3, dot4};
+        info.put("ID", 1);
         info.put("dots", dots);
         double width = dot2.length(dot1);
         double height = dot4.length(dot1);
-        check(dot1, dot2, dot3, dot4, width, height);
         this.dot1 = dot1;
         this.dot2 = dot2;
         this.dot3 = dot3;

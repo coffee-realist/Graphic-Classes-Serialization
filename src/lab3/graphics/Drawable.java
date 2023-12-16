@@ -9,6 +9,8 @@ import java.sql.Array;
 import java.util.*;
 import java.util.function.Function;
 
+import static lab3.graphics.Dot.createDot;
+
 abstract public class Drawable {
     protected static Map<String, Function<Map<String, Object>, Drawable>> json_shape_map = new HashMap<>();
     protected static Map<String, Function<List<Object>, Drawable>> bin_shape_map = new HashMap<>();
@@ -29,16 +31,18 @@ abstract public class Drawable {
         return this.info.equals(((Drawable) o).info);
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash();
     }
     public void toBinary(FileOutputStream fos) throws IOException {
         int size = info.size();
-        for (Map.Entry<String, Object> map: info.entrySet())
+        for (Map.Entry<String, Object> map: info.entrySet()) {
             if (map.getValue() instanceof Dot[])
-                size+=((Dot[]) map.getValue()).length;
+                size += ((Dot[]) map.getValue()).length * 2;
+            else if (map.getValue() instanceof Dot)
+                size++;
+        }
         fos.write(ByteBuffer.allocate(8).putDouble(size).array());
         for (Map.Entry<String, Object> map: info.entrySet()) {
             if (map.getValue() instanceof Number)
@@ -89,6 +93,7 @@ abstract public class Drawable {
                 writer.write(String.format(Locale.US, "\"%s\":%.5f", map.getKey(), map.getValue()));
             else if (map.getValue() instanceof Dot[]) {
                 int i = 0;
+                writer.write("\"d_count\":" + ((Dot[]) map.getValue()).length + ",\n");
                 writer.write("\"dots\":[\n");
                 for (Dot dot : (Dot[]) map.getValue()) {
                     dot.toJSON(writer);

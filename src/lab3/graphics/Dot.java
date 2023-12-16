@@ -1,10 +1,21 @@
 package lab3.graphics;
 
+import java.util.List;
+import java.util.Map;
+
 public class Dot extends Drawable {
     private final double x;
     private final double y;
+    static {
+        bin_shape_map.put("0", (List<Object> list)->{
+            double x = (double) list.get(0);
+            double y = (double) list.get(1);
+            return new Dot(x, y);
+        });
+    }
 
     public Dot(double x, double y) {
+        info.put("ID", 0);
         info.put("x", x);
         info.put("y", y);
         this.x = x;
@@ -51,4 +62,11 @@ public class Dot extends Drawable {
     @Override
     public void draw() {
     }
+    public static Dot createDot(Map<String, Object> keyValueMap) {
+        String name = (String) keyValueMap.get("name");
+        double x = Double.parseDouble((String) keyValueMap.get("x"));
+        double y = Double.parseDouble((String) keyValueMap.get("y"));
+        return new Dot(x, y);
+    }
+
 }
