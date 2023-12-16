@@ -33,11 +33,9 @@ public class Lab3 {
         try (FileInputStream input = new FileInputStream(file_json)) {
             geogroup = deserializeShapes(input);
         }
-        //System.out.println(geogroup);
         try (FileInputStream input = new FileInputStream(file_bin)) {
             geogroup = readBinary(input);
         }
         System.out.println(geogroup);
-
     }
 }
