@@ -8,6 +8,8 @@ public class Triangle extends Figure implements RoundAboutAvailable {
     public Triangle(Dot dot1, Dot dot2, Dot dot3) {
         super(() -> (Math.abs((dot2.getX() - dot1.getX()) * (dot3.getY() - dot1.getY()) -
                 (dot3.getX() - dot1.getX()) * (dot2.getY() - dot1.getY()))) * 0.5);
+        Dot[] dots = {dot1, dot2, dot3};
+        info.put("dots", dots);
         check(dot1, dot2, dot3);
         this.dot1 = dot1;
         this.dot2 = dot2;

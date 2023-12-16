@@ -5,6 +5,8 @@ public class Dot extends Drawable {
     private final double y;
 
     public Dot(double x, double y) {
+        info.put("x", x);
+        info.put("y", y);
         this.x = x;
         this.y = y;
     }

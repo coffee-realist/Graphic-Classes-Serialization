@@ -1,5 +1,7 @@
 package lab3.graphics;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -96,4 +98,15 @@ public class Geogroup extends Drawable {
         return hash;
 
     }
+    public void toJSON(Writer writer) throws IOException {
+        writer.write("{\n\"name\":\"Group\",");
+        writer.write("\n\"shapes\":\n[\n");
+        for (Drawable s: list) {
+            s.toJSON(writer);
+            if (list.indexOf(s) + 1 != list.size())
+                writer.write(",\n");
+        }
+        writer.write("\n]\n}");
+    }
+
 }

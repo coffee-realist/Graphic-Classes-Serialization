@@ -9,6 +9,10 @@ public class Ellipse extends Figure implements RoundAboutAvailable {
     public Ellipse(Dot center, double small_radius, double big_radius, double rotation) {
         super(() -> Math.PI * small_radius * big_radius);
         check(small_radius, big_radius);
+        info.put("center", center);
+        info.put("small_radius", small_radius);
+        info.put("big_radius", big_radius);
+        info.put("rotation", rotation);
         this.small_radius = small_radius;
         this.big_radius = big_radius;
         this.center = center;

@@ -13,6 +13,8 @@ public class Rectangle extends Figure implements RoundAboutAvailable {
 
     public Rectangle(Dot dot1, Dot dot2, Dot dot3, Dot dot4) {
         super(() -> dot2.length(dot1) * dot4.length(dot1));
+        Dot[] dots = {dot1, dot2, dot3, dot4};
+        info.put("dots", dots);
         double width = dot2.length(dot1);
         double height = dot4.length(dot1);
         check(dot1, dot2, dot3, dot4, width, height);
@@ -26,6 +28,7 @@ public class Rectangle extends Figure implements RoundAboutAvailable {
         this.rotation = rotation;
         this.center = dot3.minus(dot1).product(0.5).plus(dot1);
         this.diagonal = dot3.length(dot1);
+
     }
 
     private boolean isEqual(double a, double b) {
@@ -42,11 +45,6 @@ public class Rectangle extends Figure implements RoundAboutAvailable {
     public Rectangle move(double delta_x, double delta_y) {
         return new Rectangle(dot1.move(delta_x, delta_y), dot2.move(delta_x, delta_y),
                 dot3.move(delta_x, delta_y), dot4.move(delta_x, delta_y));
-    }
-
-    @Override
-    public void to_binary(Writer writer) {
-
     }
 
     public Ellipse getRoundAbout() {
