@@ -78,4 +78,22 @@ public class Geogroup extends Drawable {
             out.append(String.format("(Элемент группы №%d).\n", i + 1)).append(list.get(i).toString());
         return "[‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾Группа фигур‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾]\n" + out + "\n[________________Конец группы________________]\n";
     }
+
+    public boolean equals(Geogroup g) {
+        if (this == g) return true;
+        if (g == null) return false;
+        if (list.size() != g.list.size()) return false;
+        for (int i = 0; i < list.size(); i++)
+            if (!list.get(i).equals(g.list.get(i))) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        for (Drawable s : list)
+            hash += s.hashCode();
+        return hash;
+
+    }
 }
