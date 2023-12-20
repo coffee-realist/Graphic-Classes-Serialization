@@ -14,8 +14,9 @@ public class Rectangle extends Figure implements RoundAboutAvailable {
     private final double rotation;
     private final double diagonal;
     private final Dot center;
+    static private final String id = "1";
     static {
-        json_shape_map.put("Rectangle", (Map<String, Object> map)->{
+        json_shape_map.put(Rectangle.class.getCanonicalName(), (Map<String, Object> map)->{
             Dot[] dots = new Dot[5];
             int i = 0;
             for (Map<String, Object> dot: ((List<Map<String, Object>>) map.get("dots"))){
@@ -24,12 +25,12 @@ public class Rectangle extends Figure implements RoundAboutAvailable {
             }
             return new Rectangle(dots[0], dots[1], dots[2], dots[3]);
         });
-        bin_shape_map.put("1", (List<Object> list)->{
+        bin_shape_map.put(id, (List<Object> list)->{
             Dot[] dots = new Dot[4];
             int d_count = ((Double) list.get(0)).intValue();
             for (int i = 0; i < d_count; i++){
-                double x = (double) list.get(1 + i);
-                double y = (double) list.get(2 + i);
+                double x = (double) list.get(3 + i*4);
+                double y = (double) list.get(4 + i*4);
                 dots[i] = new Dot(x, y);
             }
             return new Rectangle(dots[0], dots[1], dots[2], dots[3]);

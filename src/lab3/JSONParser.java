@@ -17,7 +17,7 @@ public class JSONParser {
         jsonString = jsonString.replaceAll("\n", "");
         jsonString = jsonString.substring(jsonString.indexOf("[") + 1, jsonString.lastIndexOf("]"));
         String[] shapeStrings = splitByBrackets(jsonString);
-        Map<String, Object> keyValueMap = null;
+        Map<String, Object> keyValueMap;
         for (String shapeString : shapeStrings) {
             if (shapeString.contains("Group")) {
                 g.addAll(new ArrayList<>(readShapesFromJSON(new ByteArrayInputStream(shapeString.getBytes()))));
